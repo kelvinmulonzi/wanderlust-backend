@@ -1,11 +1,13 @@
 package com.example.travelapp.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
+@Table(name = "Booking")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,62 +29,6 @@ public class Booking {
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
         this.bookingStatus = bookingStatus;
-        this.bookingAmount = bookingAmount;
-    }
-
-    public Long getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(Long bookingId) {
-        this.bookingId = bookingId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getDestinationId() {
-        return destinationId;
-    }
-
-    public void setDestinationId(String destinationId) {
-        this.destinationId = destinationId;
-    }
-
-    public String getBookingDate() {
-        return bookingDate;
-    }
-
-    public void setBookingDate(String bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-
-    public String getBookingTime() {
-        return bookingTime;
-    }
-
-    public void setBookingTime(String bookingTime) {
-        this.bookingTime = bookingTime;
-    }
-
-    public String getBookingStatus() {
-        return bookingStatus;
-    }
-
-    public void setBookingStatus(String bookingStatus) {
-        this.bookingStatus = bookingStatus;
-    }
-
-    public String getBookingAmount() {
-        return bookingAmount;
-    }
-
-    public void setBookingAmount(String bookingAmount) {
         this.bookingAmount = bookingAmount;
     }
 
