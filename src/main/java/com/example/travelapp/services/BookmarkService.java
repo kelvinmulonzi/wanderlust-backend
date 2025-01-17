@@ -3,8 +3,7 @@ package com.example.travelapp.services;
 import com.example.travelapp.models.Bookmark;
 import com.example.travelapp.repository.BookmarkRepository;
 import org.springframework.stereotype.Service;
-import java.util.List;
-public class BookmarkService {
+import java.util.List;public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
 
     public BookmarkService(BookmarkRepository bookmarkRepository) {
