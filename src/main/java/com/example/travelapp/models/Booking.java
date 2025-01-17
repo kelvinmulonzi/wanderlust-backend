@@ -1,12 +1,15 @@
 package com.example.travelapp.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
+@Data
+
 @Table(name = "Booking")
 public class Booking {
     @Id
@@ -18,6 +21,7 @@ public class Booking {
     private String bookingTime;
     private String bookingStatus;
     private String bookingAmount;
+    private String location;
 
     public Booking() {
     }

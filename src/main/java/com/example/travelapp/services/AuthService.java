@@ -1,6 +1,7 @@
 package com.example.travelapp.services;
 
 import com.example.travelapp.dto.LoginRequest;
+import com.example.travelapp.dto.RegisterRequest;
 import com.example.travelapp.models.User;
 import com.example.travelapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,20 @@ public class AuthService {
             // Throw an exception for invalid login
             throw new IllegalArgumentException("Invalid username or password");
         }
+    }
+
+    public String register(RegisterRequest registerRequest) {
+        // Create a new user and save it to the database
+        User user = new User();
+        user.setUsername(registerRequest.getUsername());
+        user.setPassword(registerRequest.getPassword());
+        user.setEmail(registerRequest.getEmail());
+        user.setRole("USER"); // Default role
+
+        userRepository.save(user);
+
+        // Generate and return a token (e.g., JWT)
+        return generateToken(registerRequest.getUsername());
     }
 
     private boolean isValidUser(String username, String password) {
