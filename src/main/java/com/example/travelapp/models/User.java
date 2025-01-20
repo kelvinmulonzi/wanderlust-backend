@@ -1,7 +1,9 @@
 package com.example.travelapp.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "UserInfo")
 public class User {
@@ -54,5 +56,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

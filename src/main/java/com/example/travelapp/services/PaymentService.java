@@ -1,5 +1,6 @@
 package com.example.travelapp.services;
 
+import com.example.travelapp.models.Booking;
 import com.example.travelapp.models.Payment;
 import com.example.travelapp.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -156,4 +157,9 @@ public class PaymentService {
         return paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new RuntimeException("Payment not found"));
     }
+
+    public void processPartialRefund(Booking booking, double v) {
+
+    }
+
 }

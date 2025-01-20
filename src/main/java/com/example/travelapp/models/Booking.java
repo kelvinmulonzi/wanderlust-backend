@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Entity
 @Data
-
 @Table(name = "Booking")
 public class Booking {
     @Id
@@ -34,18 +33,5 @@ public class Booking {
         this.bookingTime = bookingTime;
         this.bookingStatus = bookingStatus;
         this.bookingAmount = bookingAmount;
-    }
-
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "bookingId=" + bookingId +
-                ", userId='" + userId + '\'' +
-                ", destinationId='" + destinationId + '\'' +
-                ", bookingDate='" + bookingDate + '\'' +
-                ", bookingTime='" + bookingTime + '\'' +
-                ", bookingStatus='" + bookingStatus + '\'' +
-                ", bookingAmount='" + bookingAmount + '\'' +
-                '}';
     }
 }
