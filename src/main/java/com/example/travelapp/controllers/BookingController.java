@@ -1,18 +1,23 @@
+package com.example.travelapp.controllers;
+
+import com.example.travelapp.services.BookingService;
 import com.example.travelapp.dto.BookingModificationRequest;
 import com.example.travelapp.dto.BookingRequest;
 import com.example.travelapp.models.Booking;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
+import java.util.List;
+@Controller
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
 
-    private final com.example.travelapp.service.BookingService bookingService;
+    private final com.example.travelapp.services.BookingService bookingService;
 
-    public BookingController(com.example.travelapp.service.BookingService bookingService) {
+    public BookingController(com.example.travelapp.services.BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
@@ -27,7 +32,7 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Booking>> getUserBookings(@PathVariable String userId) {
+    public ResponseEntity<List<Booking>> getUserBookings(@PathVariable Long userId) {
         return ResponseEntity.ok(bookingService.getUserBookings(userId));
     }
 

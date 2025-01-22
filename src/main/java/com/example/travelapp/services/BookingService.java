@@ -62,7 +62,7 @@ public class BookingService {
                 .orElseThrow(() -> new BookingException("Booking not found with id: " + bookingId));
     }
 
-    public List<Booking> getUserBookings(String userId) {
+    public List<Booking> getUserBookings(Long userId) {
         return bookingRepository.findByUserId(userId);
     }
 
@@ -118,7 +118,7 @@ public class BookingService {
         }
     }
 
-    public BookingSummary getBookingSummary(String userId) {
+    public BookingSummary getBookingSummary(Long userId) {
         List<Booking> userBookings = getUserBookings(userId);
         // Create and return booking summary with statistics
         return new BookingSummary(userBookings);

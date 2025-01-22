@@ -10,6 +10,8 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paymentId;
+
+    private String merchantRequestId;  // Added missing field
     private String paymentType;
     private String paymentStatus;
     private int bookingId;
@@ -17,8 +19,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int paymentId, String paymentType, String paymentStatus, int bookingId) {
+    public Payment(int paymentId, String merchantRequestId, String paymentType, String paymentStatus, int bookingId) {
         this.paymentId = paymentId;
+        this.merchantRequestId = merchantRequestId;
         this.paymentType = paymentType;
         this.paymentStatus = paymentStatus;
         this.bookingId = bookingId;
@@ -30,6 +33,14 @@ public class Payment {
 
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public String getMerchantRequestId() {
+        return merchantRequestId;
+    }
+
+    public void setMerchantRequestId(String merchantRequestId) {
+        this.merchantRequestId = merchantRequestId;
     }
 
     public String getPaymentType() {

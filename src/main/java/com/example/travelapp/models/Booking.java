@@ -1,37 +1,83 @@
 package com.example.travelapp.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
 @Entity
-@Data
-@Table(name = "Booking")
+@Table(name = "bookings")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
-    private String userId;
-    private String destinationId;
+    private Long id;
+    private Long userId;
+    private Long destinationId;
     private String bookingDate;
     private String bookingTime;
     private String bookingStatus;
     private String bookingAmount;
     private String location;
 
-    public Booking() {
+    // Getters and setters
+    public Long getId() {
+        return id;
     }
 
-    public Booking(Long bookingId, String userId, String destinationId, String bookingDate, String bookingTime, String bookingStatus, String bookingAmount) {
-        this.bookingId = bookingId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(Long destinationId) {
         this.destinationId = destinationId;
+    }
+
+    public String getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(String bookingDate) {
         this.bookingDate = bookingDate;
+    }
+
+    public String getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setBookingTime(String bookingTime) {
         this.bookingTime = bookingTime;
+    }
+
+    public String getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public String getBookingAmount() {
+        return bookingAmount;
+    }
+
+    public void setBookingAmount(String bookingAmount) {
         this.bookingAmount = bookingAmount;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

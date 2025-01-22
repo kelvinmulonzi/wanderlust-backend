@@ -7,7 +7,7 @@ public class BookingRequest {
     private String location;
 
     // Getters and setters
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -15,7 +15,7 @@ public class BookingRequest {
         this.userId = userId;
     }
 
-    public String getDestinationId() {
+    public Long getDestinationId() {
         return destinationId;
     }
 
