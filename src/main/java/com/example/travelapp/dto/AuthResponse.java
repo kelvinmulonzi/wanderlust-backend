@@ -1,20 +1,31 @@
 package com.example.travelapp.dto;
 
 public class AuthResponse {
-    private String authenticationToken;
+    private String token;
     private String username;
+    private String message;
 
-    public AuthResponse(String authenticationToken) {
-        this.authenticationToken = authenticationToken;
+    public AuthResponse() {}
+
+    public AuthResponse(String token, String username) {
+        this.token = token;
         this.username = username;
+        this.message = "Login Successful";
     }
 
-    public String getAuthenticationToken() {
-        return authenticationToken;
+    public AuthResponse(String token, String username, String message) {
+        this.token = token;
+        this.username = username;
+        this.message = message;
     }
 
-    public void setAuthenticationToken(String authenticationToken) {
-        this.authenticationToken = authenticationToken;
+    // Getters and setters
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUsername() {
@@ -23,5 +34,13 @@ public class AuthResponse {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

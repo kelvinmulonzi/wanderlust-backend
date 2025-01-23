@@ -3,6 +3,7 @@ package com.example.travelapp.Security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,9 +16,12 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final String SECRET_KEY = "your_secret_key"; // Replace with your actual secret key
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer ";
+
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -32,10 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = header.substring(TOKEN_PREFIX.length());
 
         try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey(SECRET_KEY)
-                    .parseClaimsJws(token)
-                    .getBody();
+            Claims claims = jwtTokenUtil.extractClaims(token);
 
             // Example of extracting the username and adding it to the request
             String username = claims.getSubject();

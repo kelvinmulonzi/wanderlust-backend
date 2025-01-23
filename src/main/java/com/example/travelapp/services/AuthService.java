@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -48,7 +50,13 @@ public class AuthService {
 
     private boolean isValidUser(String username, String password) {
         // Validate the user by querying the database
-        User user = userRepository.findByUsername(username);
-        return user != null && passwordEncoder.matches(password, user.getPassword());
+        Optional<User> userOptional = userRepository.findByUsername(username);
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        User user = userOptional.get();
+        return passwordEncoder.matches(password, user.getPassword());
     }
 }
