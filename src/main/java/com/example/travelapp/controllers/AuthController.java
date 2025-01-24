@@ -23,6 +23,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@RequestBody LoginRequest request) {
         try {
+
             String token = authService.login(request);
             AuthResponse authResponse = new AuthResponse(token, request.getUsername());
 

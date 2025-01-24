@@ -2,7 +2,7 @@ package com.example.travelapp.config;
 
 import com.example.travelapp.Security.JwtAuthenticationFilter;
 import com.example.travelapp.services.AuthService;
-import com.example.travelapp.services.UserDetailServices;
+
 import com.example.travelapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +23,7 @@ public class SecurityConfig {
     @Autowired
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private UserDetailServices userDetailServices;
+
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -52,13 +51,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder
-                .userDetailsService(userDetailServices)
-                .passwordEncoder(passwordEncoder());
-        return authenticationManagerBuilder.build();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+//        AuthenticationManagerBuilder authenticationManagerBuilder =
+//                http.getSharedObject(AuthenticationManagerBuilder.class);
+//        authenticationManagerBuilder
+//                .userDetailsService(userDetailServices)
+//                .passwordEncoder(passwordEncoder());
+//        return authenticationManagerBuilder.build();
+//    }
 }
