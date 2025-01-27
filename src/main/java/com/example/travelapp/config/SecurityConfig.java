@@ -3,6 +3,7 @@ package com.example.travelapp.config;
 import com.example.travelapp.Security.JwtAuthenticationFilter;
 import com.example.travelapp.services.AuthService;
 
+import com.example.travelapp.services.UserDetailServices;
 import com.example.travelapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Autowired
+    private UserDetailServices userDetailServices;
 
 
 
@@ -35,8 +38,9 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/auth/**", "/api/v1/auth/**").permitAll() // Added both possible auth paths
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/api/auth/**", "/api/v1/auth/**").permitAll() // Added both possible auth paths
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Recommended for JWT
@@ -51,13 +55,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-//        AuthenticationManagerBuilder authenticationManagerBuilder =
-//                http.getSharedObject(AuthenticationManagerBuilder.class);
-//        authenticationManagerBuilder
-//                .userDetailsService(userDetailServices)
-//                .passwordEncoder(passwordEncoder());
-//        return authenticationManagerBuilder.build();
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder
+                .userDetailsService(userDetailServices)
+                .passwordEncoder(passwordEncoder());
+        return authenticationManagerBuilder.build();
+    }
 }

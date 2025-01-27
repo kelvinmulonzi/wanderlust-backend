@@ -1,6 +1,7 @@
 package com.example.travelapp.controllers;
 
 import com.example.travelapp.config.ApiResponse;
+import com.example.travelapp.dto.DestinationRequest;
 import com.example.travelapp.models.Destination;
 import com.example.travelapp.services.DestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class DestinationController {
     private DestinationService destinationService;
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Destination>> createDestination(@RequestBody Destination destination) {
+    public ResponseEntity<ApiResponse<Destination>> createDestination(@RequestBody DestinationRequest destination) {
         try {
             Destination createdDestination = destinationService.createDestination(destination);
             ApiResponse<Destination> response = new ApiResponse<>(

@@ -1,5 +1,6 @@
 package com.example.travelapp.services;
 
+import com.example.travelapp.dto.DestinationRequest;
 import com.example.travelapp.models.Destination;
 import com.example.travelapp.repository.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,18 @@ public class DestinationService {
         return destinationRepository.findById(id);
     }
 
-    public Destination createDestination(Destination destination) {
-        return destinationRepository.save(destination);
+    public Destination createDestination(DestinationRequest destination) {
+
+        Destination newDestination = new Destination();
+
+        newDestination.setName(destination.getName());
+        newDestination.setDescription(destination.getDescription());
+        newDestination.setLocation(destination.getLocation());
+        newDestination.setImageUrl(destination.getImageUrl());
+        newDestination.setPrice(destination.getPrice());
+        newDestination.setRating(destination.getRating());
+
+        return destinationRepository.save(newDestination);
     }
 
     public Destination updateDestination(Long id, Destination destinationDetails) {
