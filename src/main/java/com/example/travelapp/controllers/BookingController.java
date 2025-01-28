@@ -20,8 +20,9 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Booking> createBooking(@RequestBody BookingRequest request) {
+        System.out.println("gfdcrd"+request);
         return ResponseEntity.ok(bookingService.createBooking(request));
     }
 

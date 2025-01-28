@@ -1,19 +1,15 @@
 package com.example.travelapp.dto;
 
 public class BookingRequest {
-    private Long userId;
+
     private Long destinationId;
     private String amount;
     private String location;
 
     // Getters and setters
-    public Long getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+
+
 
     public Long getDestinationId() {
         return destinationId;

@@ -33,7 +33,6 @@ public class BookingService {
         try {
             // Create new booking
             Booking booking = new Booking();
-            booking.setUserId(request.getUserId());
             booking.setDestinationId(request.getDestinationId());
             booking.setBookingDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE));
             booking.setBookingTime(LocalDateTime.now().format(DateTimeFormatter.ISO_TIME));
