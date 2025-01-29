@@ -10,6 +10,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.Base64;
 
 @Service
 public class PaymentService {
@@ -37,6 +42,19 @@ public class PaymentService {
         this.restTemplate = restTemplate;
     }
 
+    public String TimeStamp() {
+
+            // Define the timestamp format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+            // Get the current timestamp
+            String timestamp = LocalDateTime.now().format(formatter);
+
+            // Print the timestamp
+            return timestamp;
+
+    }
+
     // Initialize STK Push
     public ResponseEntity<String> initiatePayment(String phoneNumber, double amount, int bookingId) {
         try {
@@ -48,7 +66,7 @@ public class PaymentService {
             paymentRepository.save(payment);
 
             // Generate access token
-            String accessToken = generateAccessToken();
+            String accessToken = getAccessToken() ;
 
             // Prepare STK push request
             Map<String, Object> stkRequest = prepareStkPushRequest(phoneNumber, amount);
@@ -102,30 +120,45 @@ public class PaymentService {
     }
 
     // Generate access token
-    private String generateAccessToken() {
-        String appKeySecret = consumerKey + ":" + consumerSecret;
-        String auth = Base64.getEncoder().encodeToString(appKeySecret.getBytes());
+    public String getAccessToken() {
+        try {
+            final String consumerKey = "1OW5mZ0T76Bm0O987BiD7uJGgSodAE9k";
+            final String consumerSecret = "kzOhKGETv8FCxwGv";
+            final String accessTokenUrl = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+            final String referrerUrl = "https://acb67c68317526e725aea3040a770fc0.serveo.net/";
+            // Encode consumer key and secret in Base64
+            String credentials = consumerKey + ":" + consumerSecret;
+            String encodedAuth = Base64.getEncoder()
+                    .encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Basic " + auth);
+            // Set request headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Basic " + encodedAuth);
+            headers.set("Referer", referrerUrl);
 
-        HttpEntity<String> request = new HttpEntity<>(headers);
+            HttpEntity<String> request = new HttpEntity<>(headers);
 
-        ResponseEntity<Map> response = restTemplate.exchange(
-                "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
-                HttpMethod.GET,
-                request,
-                Map.class
-        );
+            // Make the GET request
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    accessTokenUrl, HttpMethod.GET, request, Map.class
+            );
 
-        return response.getBody().get("access_token").toString();
+            // Extract the access token from the response
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                return response.getBody().get("access_token").toString();
+            } else {
+                throw new RuntimeException("Failed to obtain access token");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return "Error: " + e.getMessage();
+        }
     }
-
     // Prepare STK Push request
     private Map<String, Object> prepareStkPushRequest(String phoneNumber, double amount) {
         Map<String, Object> request = new HashMap<>();
-        String timestamp = String.valueOf(System.currentTimeMillis());
+        String timestamp = TimeStamp();
         String password = Base64.getEncoder().encodeToString(
                 (businessShortCode + passkey + timestamp).getBytes()
         );
@@ -162,13 +195,7 @@ public class PaymentService {
 
     }
 
-    public void initiatePayment(Booking savedBooking) {
 
-
-    }
-
-    public void processRefund(Booking booking) {
-    }
 
     public void chargeAdditional(Booking booking, double v) {
     }

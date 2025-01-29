@@ -44,7 +44,7 @@ public class BookingService {
             Booking savedBooking = bookingRepository.save(booking);
 
             // Initiate payment
-            paymentService.initiatePayment(savedBooking);
+//            paymentService.initiatePayment(savedBooking);
 
             // Send confirmation notification
             notificationService.sendBookingConfirmation(savedBooking);
@@ -83,7 +83,7 @@ public class BookingService {
         // Check cancellation policy
         if (isCancellationAllowed(booking)) {
             // Process refund if needed
-            paymentService.processRefund(booking);
+//            paymentService.processRefund(booking);
             // Send cancellation notification
             notificationService.sendCancellationNotification(booking);
         } else {
