@@ -18,10 +18,16 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String role;
+    private String otp;
 
     public User() {
     }
 
+    public  String getotp(){return otp;
+    }
+    public void setotp(String otp){
+        this.otp=otp;
+    }
     public Long getId() {
         return id;
     }
@@ -88,7 +94,13 @@ public class User implements UserDetails {
     }
 
 
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
 
+    public String getOtp() {
+        return otp;
+    }
 
     @Override
     public boolean equals(Object o) {

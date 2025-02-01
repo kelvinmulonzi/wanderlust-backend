@@ -5,6 +5,7 @@ public class AuthResponse {
     private String username;
     private String message;
 
+
     public AuthResponse() {}
 
     public AuthResponse(String token, String username) {
@@ -43,4 +44,5 @@ public class AuthResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

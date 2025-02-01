@@ -172,7 +172,7 @@ public class PaymentService {
         request.put("PartyB", businessShortCode);
         request.put("PhoneNumber", phoneNumber);
         request.put("CallBackURL", callbackUrl);
-        request.put("AccountReference", "TravelApp");
+        request.put("AccountReference", "Wanderlust");
         request.put("TransactionDesc", "Travel Booking Payment");
 
         return request;
