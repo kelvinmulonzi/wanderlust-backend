@@ -19,6 +19,8 @@ public class DestinationService {
         return destinationRepository.findAll();
     }
 
+
+
     public Optional<Destination> getDestinationById(Long id) {
         return destinationRepository.findById(id);
     }
@@ -49,8 +51,11 @@ public class DestinationService {
     }
 
     public void deleteDestination(Long id) {
-        Destination destination = destinationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Destination not found"));
-        destinationRepository.delete(destination);
+        Optional<Destination> destinationOptional = destinationRepository.findById(id);
+        if (destinationOptional.isPresent()) {
+            destinationRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Destination not found");
+        }
     }
 }
