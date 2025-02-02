@@ -1,6 +1,6 @@
 package com.example.travelapp.controllers;
 
-import com.example.travelapp.config.ApiResponse;
+import com.example.travelapp.security.ApiResponse;
 import com.example.travelapp.dto.DestinationRequest;
 import com.example.travelapp.models.Destination;
 import com.example.travelapp.services.DestinationService;

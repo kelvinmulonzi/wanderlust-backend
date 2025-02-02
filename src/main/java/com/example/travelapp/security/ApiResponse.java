@@ -1,4 +1,4 @@
-package com.example.travelapp.config;
+package com.example.travelapp.security;
 
 import java.time.LocalDateTime;
 

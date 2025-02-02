@@ -2,9 +2,12 @@ package com.example.travelapp.services;
 
 import com.example.travelapp.dto.*;
 import com.example.travelapp.models.Booking;
+import com.example.travelapp.models.User;
 import com.example.travelapp.repository.BookingRepository;
 import com.example.travelapp.BookingException;
+import com.example.travelapp.repository.UserRepository;
 import com.example.travelapp.services.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -15,10 +18,15 @@ import java.util.Optional;
 
 @Service
 public class BookingService {
-
+    @Autowired
+    AuthService authService;
+    @Autowired
+    OtpService otpService;
     private final BookingRepository bookingRepository;
     private final PaymentService paymentService;
     private final NotificationService notificationService;
+    @Autowired
+    private UserRepository userRepository;
 
     public BookingService(BookingRepository bookingRepository,
                           PaymentService paymentService,
@@ -47,8 +55,50 @@ public class BookingService {
 //            paymentService.initiatePayment(savedBooking);
 
             // Send confirmation notification
+            User user;
             notificationService.sendBookingConfirmation(savedBooking);
+            if(authService.getLoggedInEmail() == null){
+                throw new BookingException("User not found");
+            }else{
+                String email = authService.getLoggedInEmail();
+                user = userRepository.findByEmail(email).get();
+            }
+            String message = "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "    <title>Booking Confirmation</title>\n" +
+                    "    <style>\n" +
+                    "        body { font-family: Arial, sans-serif; }\n" +
+                    "        .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n" +
+                    "        .header { background-color: #f4f4f4; padding: 10px; text-align: center; }\n" +
+                    "        .content { padding: 20px; background-color: #ffffff; border: 1px solid #ddd; }\n" +
+                    "        .footer { font-size: 0.9em; color: #888; text-align: center; padding: 10px; }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <div class=\"container\">\n" +
+                    "        <div class=\"header\">\n" +
+                    "            <h1>Booking Confirmation</h1>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"content\">\n" +
+                    "            <p>Hello " +  user.getUsername()+ ",</p>\n" +
+                    "            <p>Your booking has been successfully confirmed!</p>\n" +
+                    "            <p><strong>Booking Details:</strong></p>\n" +
+                    "            <ul>\n" +
+                    "                <li><strong>Place:</strong> " + request.getLocation() + "</li>\n" +
+                    "                <li><strong>Date:</strong> " + "10/02/2025"+ "</li>\n" +
+                    "                <li><strong>Amount Paid:</strong> $" + request.getAmount() + "</li>\n" +
+                    "            </ul>\n" +
+                    "            <p>Thank you for choosing us. We look forward to serving you!</p>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"footer\">\n" +
+                    "            <p>If you have any questions, please contact us at support@mulonzikelvin.com</p>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "</body>\n" +
+                    "</html>";
 
+            otpService.sendEmail(user.getEmail(),"Booking Confirmation",message);
             return savedBooking;
 
         } catch (Exception e) {

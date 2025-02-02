@@ -1,16 +1,10 @@
 package com.example.travelapp.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
 
 @Entity
-@Table(name = "UserInfo")
-public class User implements UserDetails {
+@Table(name = "user_info")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,16 +12,10 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String role;
+    private boolean verified;
     private String otp;
 
-    public User() {
-    }
-
-    public  String getotp(){return otp;
-    }
-    public void setotp(String otp){
-        this.otp=otp;
-    }
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -40,33 +28,8 @@ public class User implements UserDetails {
         return username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
     }
 
     public String getPassword() {
@@ -93,25 +56,19 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
 
-    public void setOtp(String otp) {
-        this.otp = otp;
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public String getOtp() {
         return otp;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id.equals(user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 }

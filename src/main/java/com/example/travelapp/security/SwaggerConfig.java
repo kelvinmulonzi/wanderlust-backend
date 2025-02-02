@@ -1,4 +1,4 @@
-package com.example.travelapp.config;
+package com.example.travelapp.security;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;

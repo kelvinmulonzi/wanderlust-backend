@@ -1,9 +1,10 @@
 package com.example.travelapp.controllers;
 
-import com.example.travelapp.config.ApiResponse;
+import com.example.travelapp.security.ApiResponse;
 import com.example.travelapp.dto.AuthResponse;
 import com.example.travelapp.dto.LoginRequest;
 import com.example.travelapp.dto.RegisterRequest;
+import com.example.travelapp.dto.VerifyOtpRequest;
 import com.example.travelapp.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,21 @@ public class AuthController {
             );
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+        }
+    }
+
+    @PostMapping("/verifyotp")
+    public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
+        try {
+            boolean verified = authService.verifyOtp(request.getEmail(), request.getOtp());
+
+            if (verified) {
+                return new ResponseEntity<>("OTP Verified", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("OTP Verification Failed", HttpStatus.BAD_REQUEST);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

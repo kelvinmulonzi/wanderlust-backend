@@ -1,4 +1,4 @@
-package com.example.travelapp.config;
+package com.example.travelapp.security;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
