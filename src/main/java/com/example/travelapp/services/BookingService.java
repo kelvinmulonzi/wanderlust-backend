@@ -87,7 +87,7 @@ public class BookingService {
                     "            <ul>\n" +
                     "                <li><strong>Place:</strong> " + request.getLocation() + "</li>\n" +
                     "                <li><strong>Date:</strong> " + "10/02/2025"+ "</li>\n" +
-                    "                <li><strong>Amount Paid:</strong> $" + request.getAmount() + "</li>\n" +
+                    "                <li><strong>Amount Paid:</strong> kes" + request.getAmount() + "</li>\n" +
                     "            </ul>\n" +
                     "            <p>Thank you for choosing us. We look forward to serving you!</p>\n" +
                     "        </div>\n" +

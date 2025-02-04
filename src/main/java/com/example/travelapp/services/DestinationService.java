@@ -50,6 +50,7 @@ public class DestinationService {
         return destinationRepository.save(destination);
     }
 
+
     public void deleteDestination(Long id) {
         Optional<Destination> destinationOptional = destinationRepository.findById(id);
         if (destinationOptional.isPresent()) {

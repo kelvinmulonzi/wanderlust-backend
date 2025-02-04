@@ -115,7 +115,6 @@ public class DestinationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteDestination(@PathVariable Long id) {
         try {

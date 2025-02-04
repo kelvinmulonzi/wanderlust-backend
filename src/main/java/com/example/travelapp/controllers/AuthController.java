@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @CrossOrigin(value = "*")
 @RestController
 @RequestMapping("/api/auth")
@@ -76,12 +79,23 @@ public class AuthController {
             boolean verified = authService.verifyOtp(request.getEmail(), request.getOtp());
 
             if (verified) {
-                return new ResponseEntity<>("OTP Verified", HttpStatus.OK);
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("message", "OTP Verified");
+                // If you want to include a token
+                // response.put("token", generateToken(request.getEmail()));
+                return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("OTP Verification Failed", HttpStatus.BAD_REQUEST);
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("message", "OTP Verification Failed");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 }

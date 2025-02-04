@@ -5,11 +5,17 @@ public class BookingRequest {
     private Long destinationId;
     private String amount;
     private String location;
+    private String date;
 
     // Getters and setters
 
+    public String getDate() {
+        return date;
+    }
 
-
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Long getDestinationId() {
         return destinationId;
@@ -34,4 +40,6 @@ public class BookingRequest {
     public void setLocation(String location) {
         this.location = location;
     }
+
+
 }
